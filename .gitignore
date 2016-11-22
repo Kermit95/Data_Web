@@ -1,0 +1,7 @@
+.DS_Store
+*.cnf
+*.key
+*.py[cod]
+settings.py
+__pycache__/
+build/

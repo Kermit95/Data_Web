@@ -1,0 +1,14 @@
+{% extends 'gathering/base.html' %}
+
+{% load bootstrap_toolkit %}
+
+{% block body_block %}
+  <h1 class="form-signin-heading">Sign Up</h1>
+
+  <form action="." method="post" role="form">
+    {% csrf_token %}
+    {{ form|as_bootstrap }}
+    <br/>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+{% endblock %}
