@@ -5,3 +5,4 @@
 settings.py
 __pycache__/
 build/
+sql/
