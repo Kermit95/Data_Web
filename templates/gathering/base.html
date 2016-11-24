@@ -42,6 +42,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="">Dashboard</a></li>
             <li><a href="">Settings</a></li>
+	    <li><a href="" data-toggle="modal" data-target="#modal-table-ids">填表</a></li>
 	    {% if user.is_authenticated %}
               <li><a href="{% url 'profile' user.username %}">Profile</a></li>
 	      <li><a href="{% url 'auth_logout' %}?next=/gathering/">Logout</a></li>
@@ -57,6 +58,30 @@
       </div>
     </nav>
 
+
+    <div class="modal fade" id="modal-table-ids" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">请输入表格的序列号</h4>
+	  </div>
+	  <div class="modal-body">
+            <form action="{% url 'fill_table' %}" method="post">
+	      {% csrf_token %}
+              <div class="form-group">
+		<label for="recipient-name" class="control-label">Serial Key:</label>
+		<input name="serial_key" type="text" class="form-control">
+              </div>
+	      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Confirm</button>
+            </form>
+	  </div>
+	  <div class="modal-footer">
+	  </div>
+	</div>
+      </div>
+    </div><!-- bootstrap popup -->
 
     <div class="container-fluid">
       <div class="row">
@@ -78,6 +103,7 @@
 	 ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/gathering.js' %}"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'bootstrap/js/docs.min.js' %}"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

@@ -1,0 +1,29 @@
+{% extends 'gathering/base.html' %}
+
+{% block title_block %}
+  Fill Table
+{% endblock %}
+
+{% block body_block %}
+  <h2 class="sub-header">{{ ownername }}的 {{ tablename }}</h2>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+	<tr>
+	  <th>id</th>
+	  {% for th in tablehead %}
+	    <th>{{ th }}</th>
+	  {% endfor %}
+	</tr>
+      </thead>
+      <tbody>
+	<tr>
+	  <td>0（样例）</td>
+	  {% for s in sample %}
+	    <td>{{ s }}</td>
+	  {% endfor %}
+	</tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

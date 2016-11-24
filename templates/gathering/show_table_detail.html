@@ -1,0 +1,38 @@
+{% extends 'gathering/base.html' %}
+
+{% load staticfiles %}
+
+{% block title_block %}
+  Table
+{% endblock %}
+
+{% block body_block %}
+  <h2 class="sub-header">{{ ownername }}的 {{ tablename }}</h2>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+	<tr>
+	  <th>id</th>
+	  {% for th in tablehead %}
+	    <th>{{ th }}</th>
+	  {% endfor %}
+	</tr>
+      </thead>
+      <tbody>
+	<tr>
+	  <td>0（样例）</td>
+	  {% for s in sample %}
+	    <td>{{ s }}</td>
+	  {% endfor %}
+	</tr>
+	{% for item in item_list %}
+	  <tr>
+	    {% for i in item %}
+	      <td>{{ i }}</td>
+	    {% endfor %}
+	  </tr>
+	{% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

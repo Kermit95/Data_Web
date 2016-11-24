@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from gathering.models import DataTable, UserProfile
+from gathering.models import DataTable, UserProfile, DataTableItem, DataTableOwner
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -52,3 +52,60 @@ def profile (request, username):
 
     return render(request, 'gathering/profile.html',
                   {'userprofile': userprofile, 'selecteduser': user, 'form': form})
+
+
+@login_required
+def show_table_detail (request):
+    if request.method == 'POST':
+        serial_key = request.POST.get('serial_key', '')
+        if serial_key != '':
+            try:
+                datatable = DataTable.objects.get(serial_key=serial_key)
+                ownername = datatable.owner.name
+                tablename = datatable.name
+                tablehead = datatable.head.strip().split(',')
+                sample = datatable.sample.strip().split(',')
+                datatable_item = DataTableItem.objects.filter(datatable=datatable)
+                order_num = [item.order_num for item in datatable_item]
+                item_list = [item.content.strip().split(',') for item in datatable_item]
+                for i, n in enumerate(order_num):
+                    item_list[i].insert(0, n)
+
+                context_dict = {
+                    'ownername': ownername,
+                    'tablename': tablename,
+                    'tablehead': tablehead,
+                    'sample': sample,
+                    'item_list': item_list
+                }
+
+                return render(request, 'gathering/show_table_detail.html', context_dict)
+            except DataTable.DoesNotExist:
+                return render(request, 'gathering/404.html')
+
+
+def fill_table (request):
+    if request.method == 'POST':
+        serial_key = request.POST.get('serial_key', '')
+        if serial_key:
+            try:
+                datatable = DataTable.objects.get(serial_key=serial_key)
+                ownername = datatable.owner.name
+                tablename = datatable.name
+                tablehead = datatable.head.strip().split(',')
+                sample = datatable.sample.strip().split(',')
+
+                context_dict = {
+                    'ownername': ownername,
+                    'tablename': tablename,
+                    'tablehead': tablehead,
+                    'sample': sample,
+                }
+                return render(request, 'gathering/fill_table.html', context_dict)
+            except DataTable.DoesNotExist:
+                return render(request, 'gathering/404.html')
+
+
+
+def show_all_tables (request):
+    pass
