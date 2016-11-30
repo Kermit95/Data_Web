@@ -25,5 +25,15 @@
 	</tr>
       </tbody>
     </table>
+    <p>注: 请依次填写表中信息</p>
+    <form action="{% url 'filling_complete' %}" method="post" role="form">
+      {% csrf_token %}
+      <input name="serial_key" type="hidden" value="{{ serial_key }}"/>
+      {% for th in tablehead %}
+	<label>{{ th }}: </label>
+	<input class="form-control" name="filling_content" type="text" /> <br/>
+      {% endfor %}
+      <button class="btn btn-primary" type="submit" value="submit">Confirm</button>
+    </form>
   </div>
 {% endblock %}
