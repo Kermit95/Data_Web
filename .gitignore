@@ -2,7 +2,8 @@
 *.cnf
 *.key
 *.py[cod]
-settings.py
 __pycache__/
 build/
 sql/
+settings.py
+migrations/
