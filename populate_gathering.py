@@ -28,12 +28,12 @@ def populate ():
     datatables = [
         {'serial_key': '1111',
          'name': 'First Table',
-         'head': 'name, age, class, hometown',
+         'head': 'name,age,class,hometown',
          'sample': 'Mary,16,04051401,NewYork',
          'datatable_items': datatable_items1},
         {'serial_key': '2222',
-         'name': 'second table',
-         'head': 'name, age, class, hometown, grade',
+         'name': 'Second Table',
+         'head': 'name,age,class,hometown,grade',
          'sample': 'Mary,16,04051401,NewYork, 100',
          'datatable_items': datatable_items2},
     ]

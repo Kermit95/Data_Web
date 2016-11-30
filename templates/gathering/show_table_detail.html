@@ -35,4 +35,7 @@
       </tbody>
     </table>
   </div>
+  <form action="{% url 'download_table' serial_key %}">
+    <button id="btn-download-table" class="btn btn-primary" type="submit" value="submit">下载表单</button>
+  </form>
 {% endblock %}

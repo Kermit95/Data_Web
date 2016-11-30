@@ -11,6 +11,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 from django.db import transaction
 
+import csv
+
 # Create your views here.
 def index (request):
     return render(request, 'gathering/index.html')
@@ -75,7 +77,8 @@ def show_table_detail (request, serial_key):
             'tablename': tablename,
             'tablehead': tablehead,
             'sample': sample,
-            'item_list': item_list
+            'item_list': item_list,
+            'serial_key': serial_key,
         }
         return render(request, 'gathering/show_table_detail.html', context_dict)
     except DataTable.DoesNotExist:
@@ -113,14 +116,37 @@ def filling_complete (request):
         filling_content = ','.join(filling_list)
 
         with transaction.atomic():
-            datatable = DataTable.objects.get(serial_key=serial_key)
-            order_num = DataTableItem.objects.filter(datatable=datatable).count() + 1
-            datatable_item = DataTableItem(datatable=datatable)
-            datatable_item.order_num = order_num
-            datatable_item.content = filling_content
-            datatable_item.save()
+            try:
+                datatable = DataTable.objects.get(serial_key=serial_key)
+                order_num = DataTableItem.objects.filter(datatable=datatable).count() + 1
+                datatable_item = DataTableItem(datatable=datatable)
+                datatable_item.order_num = order_num
+                datatable_item.content = filling_content
+                datatable_item.save()
+            except DataTable.DoesNotExist:
+                pass
 
         return render(request, 'gathering/filling_complete.html')
+
+
+@login_required
+def download_table (request, serial_key):
+    if serial_key:
+        try:
+            datatable = DataTable.objects.get(serial_key=serial_key)
+            datatable_items = DataTableItem.objects.filter(datatable=datatable)
+            content = 'id,' + datatable.head + '\n'
+            for item in datatable_items:
+                content += (str(item.order_num) + ',')
+                content += item.content
+                content += '\n'
+
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename=' + datatable.name + '.csv'
+            response.write(content)
+            return response
+        except DataTable.DoesNotExist:
+            return render(request, 'gathering/404.html')
 
 
 @login_required
@@ -130,3 +156,10 @@ def show_all_tables (request):
     datatables = DataTable.objects.filter(owner=owner)
     return render(request, 'gathering/show_all_tables.html',
                   {'datatables': datatables})
+
+
+def publish_table (request):
+    if request.method == 'POST':
+
+        pass
+    return render(request, 'gathering/publish_table.html')

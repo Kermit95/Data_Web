@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'^filling_complete', views.filling_complete, name='filling_complete'),
     url(r'^show_all_tables/$', views.show_all_tables, name='show_all_tables'),
     url(r'^show_table_detail/(?P<serial_key>[\d\w\-]+)/$', views.show_table_detail, name='show_table_detail'),
+    url(r'^publish_table/$', views.publish_table, name='publish_table'),
+    url(r'^download_table/(?P<serial_key>[\d\w\-]+)/$', views.download_table, name='download_table'),
 ]
