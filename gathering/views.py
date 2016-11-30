@@ -125,9 +125,7 @@ def filling_complete (request):
                 datatable_item.save()
             except DataTable.DoesNotExist:
                 pass
-
         return render(request, 'gathering/filling_complete.html')
-
 
 @login_required
 def download_table (request, serial_key):
