@@ -1,0 +1,15 @@
+{% extends 'gathering/base.html' %}
+
+{% block title_block %}
+  Show all my tables
+{% endblock %}
+
+{% block body_block %}
+  {% if user.is_authenticated %}
+    {% for dt in datatables %}
+      <p>
+	<a href="{% url 'show_table_detail' dt.serial_key %}">{{ dt }}</a>
+      </p>
+    {% endfor %}
+  {% endif %}
+{% endblock %}

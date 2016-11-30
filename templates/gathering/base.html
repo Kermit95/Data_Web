@@ -46,6 +46,7 @@
 	    {% if user.is_authenticated %}
               <li><a href="{% url 'profile' user.username %}">Profile</a></li>
 	      <li><a href="{% url 'auth_logout' %}?next=/gathering/">Logout</a></li>
+	      <li><a href="{% url 'show_all_tables' %}">我的表格</a></li>
 	    {% else %}
 	      <li><a href="{% url 'auth_login' %}">Login</a></li>
 	    {% endif %}
